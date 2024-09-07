@@ -1,80 +1,120 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import { getCountryCode } from './utils/countryConverter'; 
 
-
-const name = ref('People in Need');
-const status = ref('active');
+const countryInput = ref('');
+const countryCode = ref('');
+const electricityValue = ref(42);
+const loading = ref(false);
+const error = ref(null);
 const users = ref([]);
 
-const newUser = ref('');
-
-const toggleStatus = () => {
-  if (status.value === 'active') {
-    status.value = 'inactive'
-  } else if (status.value === 'inactive') {
-    status.value = 'pending'
-  } else {
-    status.value = 'active'
+const fetchCountryCode = () => {
+  countryCode.value = getCountryCode(countryInput.value);
+  console.log('Country code:', countryCode.value);
+  if (!countryCode.value) {
+    error.value = 'Invalid country name.';
+    return;
   }
-}
+  error.value = null;
+};
 
-const addUser = () => {
-  if (newUser.value.trim() !== '') {
-    users.value.push(newUser.value);
-    newUser.value = '';
-  }
-}
+// Function to simulate the API call
+const handleSubmit = async () => {
+  fetchCountryCode();
+  if (!countryCode.value) return;
 
-const removeUser = (index) => {
-  users.value.splice(index, 1);
-}
+  loading.value = true;
 
-onMounted(async () => {
+  const requestBody = {
+    type: "electricity",
+    electricity_unit: "kwh", // You can change to "mwh" if necessary
+    electricity_value: parseFloat(electricityValue.value), 
+    country: countryCode.value.toUpperCase(),
+    state: countryCode.value === 'US' ? 'FL' : undefined
+  };
+
+
   try {
-    const response = await fetch(
-      'https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=39.099724&lon=-94.578331&dt=1643803200&appid=8b06e5ff843c97b0ee5c468238894f26',
-      {
-        // headers: {
-        //   'Accept': 'application/json',
-        //   'Content-Type': 'application/json',
-        // }
-      }
-    )
-    const data = await response.json();
-    console.log('API data:', data);
+    const response = await fetch('https://www.carboninterface.com/api/v1/estimates', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ArU9mVHFrHIWeNDiC8BpCA', 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
 
-  } catch (error) {
-    console.error('Error fetching API data:', error);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.log(`API Error: ${response.status}, ${errorText}`);
+      throw new Error(`API Error: ${response.status}, ${errorText}`);
+    }
+
+    const data = await response.json();
+    users.value = [
+      `Carbon Emissions (g): ${data.data.attributes.carbon_g}`,
+      `Carbon Emissions (kg): ${data.data.attributes.carbon_kg}`,
+      `Carbon Emissions (lb): ${data.data.attributes.carbon_lb}`,
+      `Carbon Emissions (tonnes): ${data.data.attributes.carbon_mt}`
+    ];
+  } catch (err) {
+    error.value = `Error fetching data: ${err.message}`;
+  } finally {
+    loading.value = false;
   }
-})
+};
 
 </script>
 
 <template>
-  <h1>{{ name }}</h1>
-  <p v-if="status === 'active'">User is active</p>
-  <p v-else-if="status === 'pending'">User is pending</p>
-  <p v-else="status">User is inactive</p>
+  <h1>Carbon Estimator</h1>
 
-  <form @submit.prevent="addUser">
-    <label for="newUser">Add User:</label>
-    <br />
-    <input type="text" id="newUser" name="newUser" v-model="newUser">
-    <br />
+  <form @submit.prevent="handleSubmit">
+    <label for="country">Enter Country Name:</label>
+    <input id="country" v-model="countryInput" placeholder="N' America & Europe countries" />
+
+    <label for="electricityValue">Electricity Value (kWh):</label>
+    <input id="electricityValue" v-model="electricityValue" type="number" min="1" />
+
     <button type="submit">Submit</button>
   </form>
 
-  <h3>users:</h3>
-  <ul>
-    <li v-for="(user, index) in users" :key="user">
-      <span>
-        {{ user }}
-      </span>
-      <button @click="removeUser(index)">x</button>
-    </li>
+  <p v-if="error">{{ error }}</p>
+  <p v-if="loading">Loading...</p>
+
+  <ul v-if="users.length > 0">
+    <li v-for="(user, index) in users" :key="index">{{ user }}</li>
   </ul>
-
-  <br />
-
-  <button @click="toggleStatus">Change Status</button>
 </template>
+
+<style scoped>
+form {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f0f0f0;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+</style>
