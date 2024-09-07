@@ -33,17 +33,17 @@
                             <span
                                 class="absolute left-0 bottom-0 w-full h-[4px] bg-transparent transition-all duration-300 ease-in-out group-hover:bg-white"></span>
                         </a>
-                        <a href="task6.html" class="relative text-white px-3 py-2 hover:text-white group">
+                        <a href="/task6" class="relative text-white px-3 py-2 hover:text-white group">
                             Task 6
                             <span
                                 class="absolute left-0 bottom-0 w-full h-[4px] bg-transparent transition-all duration-300 ease-in-out group-hover:bg-white"></span>
                         </a>
-                        <a href="task7.html" class="relative text-white px-3 py-2 hover:text-white group">
+                        <a href="/task7" class="relative text-white px-3 py-2 hover:text-white group">
                             Task 7
                             <span
                                 class="absolute left-0 bottom-0 w-full h-[4px] bg-transparent transition-all duration-300 ease-in-out group-hover:bg-white"></span>
                         </a>
-                        <a href="task8.html" class="relative text-white px-3 py-2 hover:text-white group">
+                        <a href="/task8" class="relative text-white px-3 py-2 hover:text-white group">
                             Task 8
                             <span
                                 class="absolute left-0 bottom-0 w-full h-[4px] bg-transparent transition-all duration-300 ease-in-out group-hover:bg-white"></span>

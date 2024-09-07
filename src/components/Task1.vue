@@ -9,7 +9,7 @@ const newItem = ref('');
 const addItem = () => {
   if (newItem.value.trim() !== '') {
     items.value.push(newItem.value);
-    newItem.value = '';  // Clear the input
+    newItem.value = '';  
   }
 };
 
@@ -50,5 +50,4 @@ const hasItems = () => {
 </template>
 
 <style scoped>
-/* Additional styles can go here */
 </style>

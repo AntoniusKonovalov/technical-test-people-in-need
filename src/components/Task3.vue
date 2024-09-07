@@ -53,7 +53,7 @@ const validateForm = () => {
 const handleSubmit = () => {
   if (validateForm()) {
     alert('Form submitted successfully!');
-    // Further logic for form submission can be added here
+
   }
 };
 </script>
@@ -111,5 +111,4 @@ const handleSubmit = () => {
 </template>
 
 <style scoped>
-/* Additional styles, if needed */
 </style>
