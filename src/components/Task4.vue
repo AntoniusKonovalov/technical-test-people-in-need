@@ -65,30 +65,32 @@ const handleSubmit = async () => {
 
 <template>
   <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
-    <h1 class="text-2xl font-bold text-center mb-4 text-blue-700">Carbon Estimator</h1>
+    <h1 class="font-roboto text-2xl font-bold text-center mb-4">Task 4: API Integration</h1>
+
+    <h1 class="text-2xl font-bold text-left mb-4">Carbon Estimator</h1>
 
     <form @submit.prevent="handleSubmit" class="space-y-4">
       
       <!-- Country Name Input -->
       <div>
-        <label for="country" class="block text-sm font-medium text-gray-700">Enter Country Name:</label>
+        <label for="country" class="block text-sm font-medium text-[#14428B]">Enter Country Name:</label>
         <input
           id="country"
           v-model="countryInput"
-          class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500"
+          class="mt-1 block w-full p-2 border border-[#14428b6d] shadow-sm focus:outline-none focus:ring-1"
           placeholder="North America & Europe countries"
         />
       </div>
 
       <!-- Electricity Value Input -->
       <div>
-        <label for="electricityValue" class="block text-sm font-medium text-gray-700">Electricity Value (kWh):</label>
+        <label for="electricityValue" class="block text-sm font-medium text-[#14428B]">Electricity Value (kWh):</label>
         <input
           id="electricityValue"
           type="number"
           v-model="electricityValue"
           min="1"
-          class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500"
+          class="mt-1 block w-full p-2 border border-[#14428b6d] shadow-sm focus:outline-none focus:ring-1"
         />
       </div>
 
@@ -96,7 +98,7 @@ const handleSubmit = async () => {
       <div>
         <button
           type="submit"
-          class="w-full py-2 px-4 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 transition duration-300"
+          class="w-full font-bold bg-[#fcfcfc] text-[#14428B] border border-[#14428B] px-4 py-2 rounded-r hover:bg-[#14428B] hover:text-white transition duration-300"
         >
           Submit
         </button>

@@ -82,7 +82,7 @@ const handleSubmit = () => {
         <input 
           v-model="email" 
           type="email" 
-          class="block w-full p-2 border border-gray-300 rounded mt-1"
+          class="block w-full p-2 border border-gray-300 "
           placeholder="Enter your email"
         />
         <p v-if="emailError" class="text-red-500 text-sm mt-1">{{ emailError }}</p>
@@ -94,7 +94,7 @@ const handleSubmit = () => {
         <input 
           v-model="password" 
           type="password" 
-          class="block w-full p-2 border border-gray-300 rounded mt-1"
+          class="block w-full p-2 border border-gray-300"
           placeholder="Enter your password"
         />
         <p v-if="passwordError" class="text-red-500 text-sm mt-1">{{ passwordError }}</p>
@@ -103,7 +103,7 @@ const handleSubmit = () => {
       <!-- Submit Button -->
       <button 
         type="submit" 
-        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700 transition duration-300">
+        class="w-full font-bold bg-[#fcfcfc] text-[#14428B] border border-[#14428B] px-4 py-2 rounded-r hover:bg-[#14428B] hover:text-white transition duration-300">
         Submit
       </button>
     </form>
