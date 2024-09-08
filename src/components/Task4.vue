@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { getCountryCode } from '@/utils/countryConverter'; 
+const apiKey = import.meta.env.VITE_CARBON_API_KEY;
+
 
 const countryInput = ref('');
 const countryCode = ref('');
@@ -37,7 +39,7 @@ const handleSubmit = async () => {
     const response = await fetch('https://www.carboninterface.com/api/v1/estimates', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ArU9mVHFrHIWeNDiC8BpCA', 
+        'Authorization': `Bearer ${apiKey}`, 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody),
